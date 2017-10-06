@@ -4,9 +4,21 @@
         <title>Socket.io</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .active {
+                color: red;
+            }
+        </style>
     </head>
     <body>
-        <input type="text" placeholder="Enter message">
+        <input type="text" placeholder="Enter message" id="txtMessage">
+        <br><br>
+        <button id="btnShow">Show</button>
+        <div id="divSubjects">
+            <h3>NodeJS</h3>
+            <h3>PHP</h3>
+            <h3>Angular</h3>
+        </div>
     </body>
     <script src="jquery.js"></script>
     <script src="main.js"></script>
