@@ -8,6 +8,7 @@
     "reload": "^2.2.2"
   },
   "scripts": {
-    "start": "nodemon index.js -e js,ejs"
+    "start": "node index.js",
+    "server": "nodemon index.js -e js,ejs"
   }
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const reload = require('reload');
+// const reload = require('reload');
 
 const app = express();
 const server = require('http').Server(app);
@@ -22,5 +22,6 @@ io.on('connection', socket => {
     });
 });
 
-reload(app);
-server.listen(3000, () => console.log('Server start!'));
+// reload(app);
+const port = process.env.PORT || 3000;
+server.listen(port, () => console.log('Server start!'));
