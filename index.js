@@ -12,5 +12,15 @@ app.use(express.static('./public'));
 
 app.get('/', (req, res) => res.render('home'));
 
+io.on('connection', socket => {
+    // setInterval(() => {
+    //     const num = Math.random();
+    //     socket.emit('SERVER_SEND_MESSAGE', num);
+    // }, 1000);
+    socket.on('CLIENT_SEND_MESSAGE', message => {
+        io.emit('SERVER_SEND_MESSAGE', message);
+    });
+});
+
 reload(app);
 server.listen(3000, () => console.log('Server start!'));
