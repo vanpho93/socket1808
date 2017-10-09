@@ -44,8 +44,17 @@ io.on('connection', socket => {
     socket.on('CLIENT_SEND_MESSAGE', message => {
         io.emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
     });
+
+    socket.on('disconnect', () => {
+        const name = socket.username;
+        const index = users.findIndex(user => user.username === name);
+        users.splice(index, 1);
+        io.emit('USER_DISCONECT', socket.id);
+    });
 });
 
 // reload(app);
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log('Server start!'));
+
+// $('#divxx).remove();

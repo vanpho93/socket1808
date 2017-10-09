@@ -32,10 +32,15 @@ socket.on('COMFIRM_SIGN_IN', users => {
     $('#divChat').show();
     $('#formSignIn').hide();
     users.forEach(user => {
-        $('#divUsers').append(`<div>${user.username}</div>`)
+        $('#divUsers').append(`<div id="sid-${user.socketId}">${user.username}</div>`)
     });
 
     socket.on('NEW_USER', user => {
-        $('#divUsers').append(`<div>${user.username}</div>`);
+        $('#divUsers').append(`<div id="sid-${user.socketId}">${user.username}</div>`);
     });
+});
+
+socket.on('USER_DISCONECT', socketId => {
+    const divId = '#sid-' + socketId;
+    $(divId).remove();
 });
