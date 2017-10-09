@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Socket.io</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            .active {
-                color: red;
-            }
-        </style>
-    </head>
-    <body>
+
+<head>
+    <title>Socket.io</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="formSignIn">
+        <input type="text" placeholder="Enter username" id="txtUsername">
+        <br>
+        <br>
+        <button id="btnSignIn">Sign In</button>
+    </form>
+    <div id="divChat">
         <form id="formChat">
             <input type="text" placeholder="Enter message" id="txtMessage">
-            <br><br>
+            <br>
+            <br>
             <button id="btnSend">Send</button>
         </form>
-        
         <div id="divMessages">
             <h3>Messages:</h3>
         </div>
-    </body>
-    <script src="jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="main.js"></script>
-    <!-- <script src="reload/reload.js"></script> -->
+    </div>
+
+</body>
+<script src="jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="main.js"></script>
+<!-- <script src="reload/reload.js"></script> -->
+
 </html>

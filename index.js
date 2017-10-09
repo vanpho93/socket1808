@@ -12,11 +12,24 @@ app.use(express.static('./public'));
 
 app.get('/', (req, res) => res.render('home'));
 
+class User {
+    constructor(username, socketId) {
+        this.username = username;
+        this.socketId = socketId;
+    }
+}
+
+const users = [];
+
 io.on('connection', socket => {
     // setInterval(() => {
     //     const num = Math.random();
     //     socket.emit('SERVER_SEND_MESSAGE', num);
     // }, 1000);
+    socket.on('CLIENT_SIGN_IN', username => {
+        // Kiem tra su ton tai
+    });
+
     socket.on('CLIENT_SEND_MESSAGE', message => {
         io.emit('SERVER_SEND_MESSAGE', message);
     });
