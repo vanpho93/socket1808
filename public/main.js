@@ -1,5 +1,7 @@
 const socket = io();
 
+let receiverSocketId;
+
 $('#divChat').hide();
 
 socket.on('SERVER_SEND_MESSAGE', message => {
@@ -32,15 +34,25 @@ socket.on('COMFIRM_SIGN_IN', users => {
     $('#divChat').show();
     $('#formSignIn').hide();
     users.forEach(user => {
-        $('#divUsers').append(`<div id="sid-${user.socketId}">${user.username}</div>`)
+        $('#divUsers').append(`<div id="sid-${user.socketId}" socketId="${user.socketId}">${user.username}</div>`)
     });
 
     socket.on('NEW_USER', user => {
-        $('#divUsers').append(`<div id="sid-${user.socketId}">${user.username}</div>`);
+        $('#divUsers').append(`<div id="sid-${user.socketId}" socketId="${user.socketId}">${user.username}</div>`);
     });
 });
 
 socket.on('USER_DISCONECT', socketId => {
     const divId = '#sid-' + socketId;
     $(divId).remove();
+});
+
+// $('#divUsers div').click(function() {
+//     const id = $(this).attr('id');
+//     console.log(id);
+// });
+
+$('#divUsers').on('click', 'div', function() {
+    receiverSocketId = $(this).attr('socketId');
+    $('#divUsers div').removeClass('active')
 });
