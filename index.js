@@ -29,7 +29,13 @@ io.on('connection', socket => {
     //     socket.emit('SERVER_SEND_MESSAGE', num);
     // }, 1000);
     socket.on('CLIENT_SIGN_IN', username => {
-        // Kiem tra su ton tai
+        const isExist = users.some(user => {
+            return user.username === username;
+        });
+        if (isExist) return socket.emit('COMFIRM_SIGN_IN', false);
+        const user = new User(username, socket.id);
+        users.push(user);
+        socket.emit('COMFIRM_SIGN_IN', true);
     });
 
     socket.on('CLIENT_SEND_MESSAGE', message => {
