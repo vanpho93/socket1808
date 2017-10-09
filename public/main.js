@@ -31,5 +31,7 @@ socket.on('COMFIRM_SIGN_IN', users => {
     if (!users) return alert('Username has already exist');
     $('#divChat').show();
     $('#formSignIn').hide();
-    //users
+    users.forEach(user => {
+        $('#divUsers').append(`<div>${user.username}</div>`)
+    });
 });
