@@ -33,11 +33,11 @@ io.on('connection', socket => {
         const isExist = users.some(user => {
             return user.username === username;
         });
-        if (isExist) return socket.emit('COMFIRM_SIGN_IN', false);
+        if (isExist) return socket.emit('COMFIRM_SIGN_IN', null);
         socket.username = username;
         const user = new User(username, socket.id);
         users.push(user);
-        socket.emit('COMFIRM_SIGN_IN', true);
+        socket.emit('COMFIRM_SIGN_IN', users);
     });
 
     socket.on('CLIENT_SEND_MESSAGE', message => {

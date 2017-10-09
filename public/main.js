@@ -27,8 +27,9 @@ $('#formSignIn').submit((e) => {
     $('#txtUsername').val('');
 });
 
-socket.on('COMFIRM_SIGN_IN', isSuccessed => {
-    if (!isSuccessed) return alert('Username has already exist');
+socket.on('COMFIRM_SIGN_IN', users => {
+    if (!users) return alert('Username has already exist');
     $('#divChat').show();
     $('#formSignIn').hide();
+    //users
 });
