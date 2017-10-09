@@ -19,6 +19,8 @@ class User {
     }
 }
 
+//alert
+
 const users = [];
 
 io.on('connection', socket => {
