@@ -36,8 +36,9 @@ io.on('connection', socket => {
         if (isExist) return socket.emit('COMFIRM_SIGN_IN', null);
         socket.username = username;
         const user = new User(username, socket.id);
-        users.push(user);
         socket.emit('COMFIRM_SIGN_IN', users);
+        users.push(user);
+        io.emit('NEW_USER', user);
     });
 
     socket.on('CLIENT_SEND_MESSAGE', message => {

@@ -34,4 +34,8 @@ socket.on('COMFIRM_SIGN_IN', users => {
     users.forEach(user => {
         $('#divUsers').append(`<div>${user.username}</div>`)
     });
+
+    socket.on('NEW_USER', user => {
+        $('#divUsers').append(`<div>${user.username}</div>`);
+    });
 });
