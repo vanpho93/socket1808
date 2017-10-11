@@ -1,5 +1,7 @@
 const express = require('express');
-// const reload = require('reload');
+
+const { sign } = require('./jwt');
+const reload = require('reload');
 
 const app = express();
 const server = require('http').Server(app);
@@ -36,9 +38,12 @@ io.on('connection', socket => {
         if (isExist) return socket.emit('COMFIRM_SIGN_IN', null);
         socket.username = username;
         const user = new User(username, socket.id);
-        socket.emit('COMFIRM_SIGN_IN', users);
-        users.push(user);
-        io.emit('NEW_USER', user);
+        sign({ username })
+        .then(token => {
+            socket.emit('COMFIRM_SIGN_IN', { users, token });
+            users.push(user);
+            io.emit('NEW_USER', user);
+        });
     });
 
     socket.on('CLIENT_SEND_MESSAGE', message => {
@@ -60,7 +65,7 @@ io.on('connection', socket => {
     });
 });
 
-// reload(app);
+reload(app);
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log('Server start!'));
 

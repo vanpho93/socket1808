@@ -28,13 +28,15 @@ $('#formSignIn').submit((e) => {
     $('#txtUsername').val('');
 });
 
-socket.on('COMFIRM_SIGN_IN', users => {
-    if (!users) return alert('Username has already exist');
+socket.on('COMFIRM_SIGN_IN', result => {
+    if (!result) return alert('Username has already exist');
     $('#divChat').show();
     $('#formSignIn').hide();
+    const { users, token } = result;
     users.forEach(user => {
         $('#divUsers').append(`<div id="sid-${user.socketId}" socketId="${user.socketId}">${user.username}</div>`)
     });
+    localStorage.setItem('token', token);
 
     socket.on('NEW_USER', user => {
         $('#divUsers').append(`<div id="sid-${user.socketId}" socketId="${user.socketId}">${user.username}</div>`);
