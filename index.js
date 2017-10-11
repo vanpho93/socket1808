@@ -14,6 +14,10 @@ app.use(express.static('./public'));
 
 app.get('/', (req, res) => res.render('home'));
 
+app.get('/chat/:id', (req, res) => {
+    res.render('privateChat', { receiverSocketId: req.params.id });
+});
+
 class User {
     constructor(username, socketId) {
         this.username = username;
@@ -57,10 +61,20 @@ io.on('connection', socket => {
     });
 
     socket.on('CLIENT_SEND_PRIVATE_MESSAGE', obj => {
-        const { message, receiverSocketId } = obj;
-        socket.to(receiverSocketId)
-            .emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
-        socket.emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
+        const { message, receiverSocketId, token } = obj;
+        if (socket.username) {
+            socket.to(receiverSocketId)
+                .emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
+            return socket.emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
+        }
+        if (token) {
+            verify(token)
+            .then(obj => {
+                const { username } = obj;
+                socket.to(receiverSocketId)
+                .emit('SERVER_SEND_MESSAGE', `${username}: ${message}`);
+            });
+        }
     });
 
     socket.on('CLIENT_RESIGN_IN', token => {

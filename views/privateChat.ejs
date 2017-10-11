@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Socket.io</title>
+    <base href="../">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+    <script>
+        const receiverSocketId = "<%= receiverSocketId %>";
+    </script>
+</head>
+
+<body>
+    <form id="formChat">
+        <input type="text" placeholder="Enter message" id="txtMessage">
+        <br><br>
+        <button id="btnSendPrivate">Send Private</button>
+    </form>
+</body>
+<script src="jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="private.js"></script>
+<script src="reload/reload.js"></script>
+</html>
