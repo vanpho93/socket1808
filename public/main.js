@@ -8,7 +8,6 @@ socket.on('SERVER_SEND_MESSAGE', message => {
     $('#divMessages').append(`<p>${message}</p>`)
 });
 
-
 // $('#btnSend').click(() => {
 //     const message = $('#txtMessage').val();
 //     socket.emit('CLIENT_SEND_MESSAGE', message);
@@ -54,5 +53,12 @@ socket.on('USER_DISCONECT', socketId => {
 
 $('#divUsers').on('click', 'div', function() {
     receiverSocketId = $(this).attr('socketId');
-    $('#divUsers div').removeClass('active')
+    $('#divUsers div').removeClass('active');
+    $(this).addClass('active');
+});
+
+$('#btnSendPrivate').click(() => {
+    const message = $('#txtMessage').val();
+    socket.emit('CLIENT_SEND_PRIVATE_MESSAGE', { message, receiverSocketId });
+    $('#txtMessage').val('');
 });

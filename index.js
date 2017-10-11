@@ -51,6 +51,12 @@ io.on('connection', socket => {
         users.splice(index, 1);
         io.emit('USER_DISCONECT', socket.id);
     });
+
+    socket.on('CLIENT_SEND_PRIVATE_MESSAGE', obj => {
+        const { message, receiverSocketId } = obj;
+        socket.to(receiverSocketId)
+            .emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
+    });
 });
 
 // reload(app);
