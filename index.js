@@ -56,6 +56,7 @@ io.on('connection', socket => {
         const { message, receiverSocketId } = obj;
         socket.to(receiverSocketId)
             .emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
+        socket.emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
     });
 });
 

@@ -57,7 +57,8 @@ $('#divUsers').on('click', 'div', function() {
     $(this).addClass('active');
 });
 
-$('#btnSendPrivate').click(() => {
+$('#btnSendPrivate').click((e) => {
+    e.preventDefault();
     const message = $('#txtMessage').val();
     socket.emit('CLIENT_SEND_PRIVATE_MESSAGE', { message, receiverSocketId });
     $('#txtMessage').val('');
