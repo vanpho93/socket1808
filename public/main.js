@@ -4,6 +4,8 @@ let receiverSocketId;
 
 $('#divChat').hide();
 
+recoverUserStatus();
+
 socket.on('SERVER_SEND_MESSAGE', message => {
     $('#divMessages').append(`<p>${message}</p>`)
 });
@@ -65,3 +67,8 @@ $('#btnSendPrivate').click((e) => {
     socket.emit('CLIENT_SEND_PRIVATE_MESSAGE', { message, receiverSocketId });
     $('#txtMessage').val('');
 });
+
+function recoverUserStatus() {
+    const token = localStorage.getItem('token');
+    if (token) socket.emit('CLIENT_RESIGN_IN', token);
+}

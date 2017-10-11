@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { sign } = require('./jwt');
+const { sign, verify } = require('./jwt');
 const reload = require('reload');
 
 const app = express();
@@ -31,7 +31,6 @@ io.on('connection', socket => {
     //     socket.emit('SERVER_SEND_MESSAGE', num);
     // }, 1000);
     socket.on('CLIENT_SIGN_IN', username => {
-        let a = 100;
         const isExist = users.some(user => {
             return user.username === username;
         });
@@ -62,6 +61,25 @@ io.on('connection', socket => {
         socket.to(receiverSocketId)
             .emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
         socket.emit('SERVER_SEND_MESSAGE', `${socket.username}: ${message}`);
+    });
+
+    socket.on('CLIENT_RESIGN_IN', token => {
+        verify(token)
+        .then(obj => {
+            const { username } = obj;
+            const isExist = users.some(user => {
+                return user.username === username;
+            });
+            if (isExist) return socket.emit('COMFIRM_SIGN_IN', null);
+            socket.username = username;
+            const user = new User(username, socket.id);
+            sign({ username })
+            .then(token => {
+                socket.emit('COMFIRM_SIGN_IN', { users, token });
+                users.push(user);
+                io.emit('NEW_USER', user);
+            });
+        })
     });
 });
 
